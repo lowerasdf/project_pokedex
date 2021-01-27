@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$(document).ready(function(){
+  $("#submit").click(function(){
+    element = document.getElementById("type1");
+    if (element != null) {
+      type1 = element.options[element.selectedIndex].value;
+    } else {
+      type1 = "";
+    }
+
+    element = document.getElementById("type2");
+    if (element != null) {
+      type2 = element.options[element.selectedIndex].value;
+    } else {
+      type2 = "";
+    }
+
+    //$.ajaxSetup({async: false});
+    $.get("http://127.0.0.1:8080/pokemon?".concat("type1=", type1, "&type2=", type2), function(data){
+      var json = JSON.stringify(data);
+      var obj = JSON.parse(json);
+      var list = function(obj) {
+        for (var prop in obj) {
+          document.getElementById('items').innerHTML += '<li>' + obj[prop].Name + ' (#' + obj[prop].ID + ')' + '</li>';
+        }
+      }
+      document.getElementById('items').innerHTML = ''
+      list(obj)
+      //document.getElementById("images").src = "pokemon/sugimori/1.png"
+      //document.getElementById("data").innerHTML = json;
+    });
+  });
+});
+
+</script>
+</head>
+<body>
+
+<p> Pokemon </p>
+
+<form>
+  <select id="type1" name="type1">
+    <option value="normal">normal</option>
+    <option value="fighting">fighting</option>
+    <option value="flying">flying</option>
+    <option value="poison">poison</option>
+    <option value="ground">ground</option>
+    <option value="rock">rock</option>
+    <option value="bug">bug</option>
+    <option value="ghost">ghost</option>
+    <option value="steel">steel</option>
+    <option value="fire">fire</option>
+    <option value="water">water</option>
+    <option value="grass">grass</option>
+    <option value="electric">electric</option>
+    <option value="psychic">psychic</option>
+    <option value="ice">ice</option>
+    <option value="dragon">dragon</option>
+    <option value="dark">dark</option>
+    <option value="fairy">fairy</option>
+    <option value="" selected>none</option>
+  </select>
+
+  <select id="type2" name="type2">
+    <option value="normal">normal</option>
+    <option value="fighting">fighting</option>
+    <option value="flying">flying</option>
+    <option value="poison">poison</option>
+    <option value="ground">ground</option>
+    <option value="rock">rock</option>
+    <option value="bug">bug</option>
+    <option value="ghost">ghost</option>
+    <option value="steel">steel</option>
+    <option value="fire">fire</option>
+    <option value="water">water</option>
+    <option value="grass">grass</option>
+    <option value="electric">electric</option>
+    <option value="psychic">psychic</option>
+    <option value="ice">ice</option>
+    <option value="dragon">dragon</option>
+    <option value="dark">dark</option>
+    <option value="fairy">fairy</option>
+    <option value="" selected>none</option>
+  </select>
+  <br>
+  <button id="submit" type="button">Submit</button>
+</form>
+
+<p id="data"></p>
+
+<ul id="items"></ul>
+
+</body>
+</html>
